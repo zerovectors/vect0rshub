@@ -31,7 +31,7 @@ do -- gui
 		self.gui_objs.mainframes[mainframe].buttons[name].textbox.Position = UDim2.new(0, 5, 0, 0)
 		self.gui_objs.mainframes[mainframe].buttons[name].textbox.Size = UDim2.new(1, -10, 1, 0)
 		self.gui_objs.mainframes[mainframe].buttons[name].textbox.Font = Enum.Font.SciFi
-		self.gui_objs.mainframes[mainframe].buttons[name].textbox.PlaceHolderText = text
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.Text = text
 		self.gui_objs.mainframes[mainframe].buttons[name].textbox.TextScaled = true
 		self.gui_objs.mainframes[mainframe].buttons[name].textbox.TextColor3 = Color3.new(1, 1, 1)
 		self.gui_objs.mainframes[mainframe].buttons[name].textbox.TextXAlignment = Enum.TextXAlignment.Left
