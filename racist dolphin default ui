@@ -206,11 +206,12 @@ do -- gui
                 _G.main:superjump()
             end)
             self:AddTextBox("Character Cheats", "WalkSpeed", "WalkSpeed", "WalkSpeed", function(a)
-                _G.main:walkspeed(a)
+                print(a)
+                _G.main:jumppower(tonumber(a))
             end)
             self:AddTextBox("Character Cheats", "JumpPower", "JumpPower", "JumpPower", function(a)
                 print(a)
-                _G.main:jumppower(a)
+                _G.main:jumppower(tonumber(a))
             end)
         end
     end
