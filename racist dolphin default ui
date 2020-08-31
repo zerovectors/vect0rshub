@@ -1,0 +1,219 @@
+_G.library = { }
+script.Name = "Base_Script"
+local ca = workspace.CurrentCamera
+local cg = game:GetService("CoreGui")
+
+do -- gui
+	_G.library = {
+		name = "Base",
+		gui_objs = {
+			main = nil,
+			mainframes = { },
+        },
+        flags = { },
+        toggles = { }
+	}
+	function _G.library:AddTextBox(mainframe, name, text, flag, callback)
+		self.gui_objs.mainframes[mainframe].buttons[name] = { }
+        callback = callback or function() end
+        self.flags[flag] = flag or text
+		self.gui_objs.mainframes[mainframe].buttons[name].main = Instance.new("Frame")
+		self.gui_objs.mainframes[mainframe].buttons[name].main.BackgroundTransparency = 1
+		self.gui_objs.mainframes[mainframe].buttons[name].main.Name = name
+		self.gui_objs.mainframes[mainframe].buttons[name].main.Position = UDim2.new(0, 0, 0, 5 + self.gui_objs.mainframes[mainframe].buttonsnum)
+		self.gui_objs.mainframes[mainframe].buttons[name].main.Size = UDim2.new(1, 0, 0, 15)
+		self.gui_objs.mainframes[mainframe].buttons[name].main.Parent = self.gui_objs.mainframes[mainframe].buttonsframe
+
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox = Instance.new("TextBox")
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.BackgroundColor3 = Color3.new(66 / 255, 66 / 255, 66 / 255)
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.BackgroundTransparency = 0.3
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.BorderSizePixel = 0
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.Position = UDim2.new(0, 5, 0, 0)
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.Size = UDim2.new(1, -10, 1, 0)
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.Font = Enum.Font.SciFi
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.Text = text
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.TextScaled = true
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.TextColor3 = Color3.new(1, 1, 1)
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.TextXAlignment = Enum.TextXAlignment.Left
+		self.gui_objs.mainframes[mainframe].buttons[name].textbox.Parent = self.gui_objs.mainframes[mainframe].buttons[name].main
+
+		self.gui_objs.mainframes[mainframe].main.Size = UDim2.new(0, 200, 0, 25 + self.gui_objs.mainframes[mainframe].buttonsnum)
+
+		self.gui_objs.mainframes[mainframe].buttonsnum = self.gui_objs.mainframes[mainframe].buttonsnum + 20
+
+        self.gui_objs.mainframes[mainframe].buttons[name].textbox.FocusLost:Connect(function(text)
+            callback(self.toggles[text])
+        end)
+
+		return self.gui_objs.mainframes[mainframe].buttons[name].textbox
+	end
+
+    function _G.library:AddButton(mainframe, name, text, flag, callback)
+        callback = callback or function() end
+        self.flags[flag] = flag or text
+        self.gui_objs.mainframes[mainframe].buttons[name] = { }
+		self.gui_objs.mainframes[mainframe].buttons[name].main = Instance.new("Frame")
+		self.gui_objs.mainframes[mainframe].buttons[name].main.BackgroundTransparency = 1
+		self.gui_objs.mainframes[mainframe].buttons[name].main.Name = name
+		self.gui_objs.mainframes[mainframe].buttons[name].main.Position = UDim2.new(0, 0, 0, 5 + self.gui_objs.mainframes[mainframe].buttonsnum)
+		self.gui_objs.mainframes[mainframe].buttons[name].main.Size = UDim2.new(1, 0, 0, 15)
+		self.gui_objs.mainframes[mainframe].buttons[name].main.Parent = self.gui_objs.mainframes[mainframe].buttonsframe
+
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton = Instance.new("TextButton")
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.BackgroundTransparency = 1
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.Position = UDim2.new(0, 5, 0, 0)
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.Size = UDim2.new(1, -5, 1, 0)
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.ZIndex = 2
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.Font = Enum.Font.SciFi
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.Text = text
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.TextColor3 = Color3.new(1, 1, 1)
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.TextScaled = true
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.TextXAlignment = Enum.TextXAlignment.Left
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.Modal = true
+		self.gui_objs.mainframes[mainframe].buttons[name].textbutton.Parent = self.gui_objs.mainframes[mainframe].buttons[name].main
+
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel = Instance.new("TextLabel")
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel.BackgroundTransparency = 1
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel.Position = UDim2.new(1, -25, 0, 0)
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel.Size = UDim2.new(0, 25, 1, 0)
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel.Font = Enum.Font.Code
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel.Text = "OFF"
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel.TextColor3 = Color3.new(1, 0, 0)
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel.TextScaled = true
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel.TextXAlignment = Enum.TextXAlignment.Right
+		self.gui_objs.mainframes[mainframe].buttons[name].textlabel.Parent = self.gui_objs.mainframes[mainframe].buttons[name].main
+
+		self.gui_objs.mainframes[mainframe].main.Size = UDim2.new(0, 200, 0, 25 + self.gui_objs.mainframes[mainframe].buttonsnum)
+		self.gui_objs.mainframes[mainframe].buttonsnum = self.gui_objs.mainframes[mainframe].buttonsnum + 20
+
+        self.callback = typeof(self.callback) == "function" and self.callback or function() end
+        self.gui_objs.mainframes[mainframe].buttons[name].textbutton.MouseButton1Down:Connect(function()
+            self.toggles[text] = (not self.toggles[text])
+            if self.gui_objs.mainframes[mainframe].buttons[name].textlabel.Text == "OFF" then
+                self.gui_objs.mainframes[mainframe].buttons[name].textlabel.Text = "ON"
+                self.gui_objs.mainframes[mainframe].buttons[name].textlabel.TextColor3 = Color3.new(0, 1, 0)
+            else
+                self.gui_objs.mainframes[mainframe].buttons[name].textlabel.Text = "OFF"
+                self.gui_objs.mainframes[mainframe].buttons[name].textlabel.TextColor3 = Color3.new(1, 0, 0)
+            end
+            callback(self.toggles[text])
+        end)
+
+		return self.gui_objs.mainframes[mainframe].buttons[name].textbutton, self.gui_objs.mainframes[mainframe].buttons[name].textlabel
+	end
+
+	function _G.library:AddMainFrame(name)
+		if self.gui_objs.mainframes.numX == nil then self.gui_objs.mainframes.numX = 0 end
+		if self.gui_objs.mainframes.numY == nil then self.gui_objs.mainframes.numY = 0 end
+
+		self.gui_objs.mainframes[name] = { }
+		self.gui_objs.mainframes[name].buttons = { }
+
+		self.gui_objs.mainframes[name].main = Instance.new("Frame")
+		self.gui_objs.mainframes[name].main.BackgroundColor3 = Color3.new(0, 0, 0)
+		self.gui_objs.mainframes[name].main.BackgroundTransparency = 0.3
+		self.gui_objs.mainframes[name].main.BorderColor3 = Color3.new(0, 0, 139 / 255)
+		self.gui_objs.mainframes[name].main.BorderSizePixel = 3
+		self.gui_objs.mainframes[name].main.Name = name
+		self.gui_objs.mainframes[name].main.Position = UDim2.new(0, 50 + self.gui_objs.mainframes.numX, 0, 50 + self.gui_objs.mainframes.numY)
+		self.gui_objs.mainframes[name].main.Size = UDim2.new(0, 200, 0, 350)
+		self.gui_objs.mainframes[name].main.Active = true
+		self.gui_objs.mainframes[name].main.Draggable = true
+
+		self.gui_objs.mainframes[name].titleframe = Instance.new("Frame")
+		self.gui_objs.mainframes[name].titleframe.BackgroundColor3 = Color3.new(0, 0, 0)
+		self.gui_objs.mainframes[name].titleframe.BackgroundTransparency = 0.3
+		self.gui_objs.mainframes[name].titleframe.BorderColor3 = Color3.new(0, 0, 139 / 255)
+		self.gui_objs.mainframes[name].titleframe.BorderSizePixel = 3
+		self.gui_objs.mainframes[name].titleframe.Name = "titleframe"
+		self.gui_objs.mainframes[name].titleframe.Position = UDim2.new(0, 0, 0, -35)
+		self.gui_objs.mainframes[name].titleframe.Size = UDim2.new(1, 0, 0, 25)
+		self.gui_objs.mainframes[name].titleframe.Parent = self.gui_objs.mainframes[name].main
+
+		self.gui_objs.mainframes[name].title = Instance.new("TextLabel")
+		self.gui_objs.mainframes[name].title.BackgroundTransparency = 1
+		self.gui_objs.mainframes[name].title.Name = "title"
+		self.gui_objs.mainframes[name].title.Size = UDim2.new(1, 0, 1, 0)
+		self.gui_objs.mainframes[name].title.Font = Enum.Font.Code
+		self.gui_objs.mainframes[name].title.Text = name
+		self.gui_objs.mainframes[name].title.TextColor3 = Color3.new(1, 1, 1) -- 0, 0, 1
+		self.gui_objs.mainframes[name].title.TextSize = 20
+		self.gui_objs.mainframes[name].title.Parent = self.gui_objs.mainframes[name].titleframe
+
+		self.gui_objs.mainframes[name].buttonsframe = Instance.new("Frame")
+		self.gui_objs.mainframes[name].buttonsframe.BackgroundTransparency = 1
+		self.gui_objs.mainframes[name].buttonsframe.Name = "buttons"
+		self.gui_objs.mainframes[name].buttonsframe.Size = UDim2.new(1, 0, 1, 0)
+		self.gui_objs.mainframes[name].buttonsframe.Parent = self.gui_objs.mainframes[name].main
+
+		self.gui_objs.mainframes[name].infoframe = self.gui_objs.mainframes[name].titleframe:clone()
+		self.gui_objs.mainframes[name].infoframe.title:Destroy()
+		self.gui_objs.mainframes[name].infoframe.Name = "infoframe"
+		self.gui_objs.mainframes[name].infoframe.Position = UDim2.new(0, 0, 1, 10)
+		self.gui_objs.mainframes[name].infoframe.Parent = self.gui_objs.mainframes[name].main
+
+		self.gui_objs.mainframes[name].infotitle = self.gui_objs.mainframes[name].title:clone()
+		self.gui_objs.mainframes[name].infotitle.Name = "infotitle"
+		self.gui_objs.mainframes[name].infotitle.Text = "Press the \"P\" key to toggle the GUI\nMade by: @Racist Dolphin#8943\n"
+		self.gui_objs.mainframes[name].infotitle.TextColor3 = Color3.new(1, 1, 1)
+		self.gui_objs.mainframes[name].infotitle.TextScaled = true
+		self.gui_objs.mainframes[name].infotitle.Parent = self.gui_objs.mainframes[name].infoframe
+
+		self.gui_objs.mainframes[name].buttonsnum = 0
+		self.gui_objs.mainframes.numX = self.gui_objs.mainframes.numX + 250
+
+		if (50 + (self.gui_objs.mainframes.numX + 200)) >= ca.ViewportSize.X then
+			self.gui_objs.mainframes.numX = 0
+			self.gui_objs.mainframes.numY = self.gui_objs.mainframes.numY + 450
+		end
+
+		self.gui_objs.mainframes[name].main.Parent = self.gui_objs.main
+	end
+
+	function _G.library:Init()
+		self.gui_objs.main = Instance.new("ScreenGui")
+		self.gui_objs.main.Name = self.name
+        self.gui_objs.main.Parent = cg
+        
+		do -- Visual Cheats
+			self:AddMainFrame("Visual Cheats")
+            self:AddButton("Visual Cheats", "FullBright", "FullBright" ,"FullBright", function(a)
+                _G.library.flags["FullBright"] = a
+                _G.main:fullbright()
+            end)
+            self:AddButton("Visual Cheats", "ESP", "ESP" ,"ESPTog", function(a)
+                _G.library.flags["ESPTog"] = a
+                _G.main:esptoggle()
+            end)
+            self:AddButton("Visual Cheats", "Chams", "Chams" ,"ChamsTog", function(a)
+                _G.library.flags["ChamsTog"] = a
+                _G.main:chamstoggle()
+            end)
+            self:AddButton("Visual Cheats", "Tracers", "Tracers" ,"TracersTog", function(a)
+                _G.library.flags["TracersTog"] = a
+                _G.main:tracerstoggle()
+            end)
+        end
+        
+        do -- character cheats
+            self:AddMainFrame("Character Cheats")
+            self:AddButton("Character Cheats", "SuperSpeed", "SuperSpeed", "SuperSpeed", function(a)
+                _G.library.flags["SuperSpeed"] = a
+                _G.main:superspeed()
+            end)
+            self:AddButton("Character Cheats", "SuperJump", "SuperJump", "SuperJump", function(a)
+                _G.library.flags["SuperJump"] = a
+                _G.main:superjump()
+            end)
+            self:AddTextBox("Character Cheats", "WalkSpeed", "WalkSpeed", "WalkSpeed", function(a)
+                _G.main:walkspeed(a)
+            end)
+            self:AddTextBox("Character Cheats", "JumpPower", "JumpPower", "JumpPower", function(a)
+                _G.main:jumppower(a)
+            end)
+        end
+    end
+end
+
+_G.library:Init()
+return _G.library
