@@ -1,0 +1,122 @@
+_G.ui = { }
+local MyPlr = game.Players.LocalPlayer
+function _G.ui:Init()
+    do -- visuals
+        _G.ui.visuals = _G.library:CreateWindow("Visuals")
+        _G.ui.visuals:AddToggle({text = "FullBright", flag = "FullBright", callback = function(a)
+            _G.library.flags.FullBright = a
+            _G.main:fullbright()
+        end})
+        _G.ui.visuals:AddToggle({text = "ESP", flag = "ESPTog", callback = function(a)
+            _G.library.flags.ESPEnabled = a
+            _G.main:esptoggle()
+        end})
+        _G.ui.visuals:AddToggle({text = "Chams", flag = "ChamsTog", callback = function(a)
+            _G.library.flags.ChamsTog = a
+            _G.main:chamstoggle()
+        end})
+        _G.ui.visuals:AddToggle({text = "Tracers", flag = "TracersTog", callback = function(a)
+            _G.library.flags.TracersTog = a
+            _G.main:tracerstoggle()
+        end})
+        _G.ui.espsettings = _G.ui.visuals:AddFolder("ESP Settings")
+        _G.ui.espsettings:AddColor({text = "Ally Color", flag = "allycolor", color = Color3.fromRGB(221, 3, 255), callback = function(a)
+            _G.main.espsettings.Colors.Ally = a
+            _G.main:updatecolors()
+        end})
+        _G.ui.espsettings:AddColor({text = "Enemy Color", flag = "enemycolor", color = Color3.fromRGB(221, 3, 255), callback = function(a)
+            _G.main.espsettings.Colors.Enemy = a
+            _G.main:updatecolors()
+        end})
+        _G.ui.espsettings:AddColor({text = "Neutral Color", flag = "enemycolor", color = Color3.fromRGB(221, 3, 255), callback = function(a)
+            _G.main.espsettings.Colors.Neutral = a
+            _G.main:updatecolors()
+        end})
+    end
+    do -- character
+        _G.ui.character = _G.library:CreateWindow("Character")
+        _G.ui.character:AddToggle({text = "SuperSpeed", flag = "SuperSpeed", callback = function(a)
+            _G.library.flags.SuperSpeed = a
+            _G.main:superspeed()
+        end})
+        _G.ui.character:AddToggle({text = "SuperJump", flag = "JumpPower", callback = function(a)
+            _G.library.flags.SuperJump = a
+            _G.main:superjump()
+        end})
+        _G.ui.character:AddSlider({text = "WalkSpeed", value = 16, min = 0, max = 150, callback = function(a) 
+            _G.main:walkspeed(a)
+        end})
+        _G.ui.character:AddSlider({text = "JumpPower", value = 50, min = 0, max = 200, callback = function(a) 
+            _G.main:jumppower(a)
+        end})
+        _G.ui.character:AddToggle({text = "Fly", flag = "flytog", callback = function(a)
+            _G.library.flags["flytog"] = a
+            _G.main:flytoggle()
+        end})
+        _G.ui.character:AddToggle({text = "Vehicle Fly", flag = "vflytog", callback = function(a)
+            _G.library.flags["vflytog"] = a
+            _G.main:vehicleflytoggle()
+        end})
+    end
+    do -- miscellaneous
+        _G.ui.miscellaneous = _G.library:CreateWindow("Miscellaneous")
+        _G.ui.miscellaneous:AddToggle({text = "Low Gravity", flag = "lowgrav", callback = function(a)
+            _G.library.flags["lowgrav"] = a
+            _G.main:lowgravity()
+        end})
+        _G.ui.miscellaneous:AddSlider({text = "Gravity", value = 196, min = 0, max = 196, callback = function(a) 
+            _G.main:gravity(a)
+        end})
+        _G.ui.miscellaneous:AddButton({text = "BHop", callback = function()
+            _G.main:Bhop()
+        end})
+        _G.ui.miscellaneous:AddButton({text = "ReJoin", callback = function()
+            _G.main:ReJoin()
+        end})
+    end
+    do -- _G.ui settings
+        _G.main.uisettings = _G.library:CreateWindow("UI Settings")
+        _G.main.uisettings:AddColor({text = "Cursor Color", flag = "cursorcolor", color = Color3.fromRGB(221, 3, 255), callback = function(a)
+            _G.main:cursorcolor(a)
+        end})
+        _G.main.uisettings:AddBind({text = "Toggle UI", key = "Q", callback = function() 
+            _G.library:Close()
+        end})
+        if _G.main.creator_accounts[MyPlr.UserId] or _G.main.admin_accounts[MyPlr.UserId] then
+            _G.main.uisettings:AddToggle({text = "Cursor", state = true, flag = "CursorTog", callback = function(a)
+                _G.library.flags["CursorTog"] = a
+                _G.main:CursorTog()
+            end})
+            _G.main.uisettings:AddToggle({text = "UI Watermark", state = true, callback = function(a)
+                game.CoreGui:WaitForChild("uwuware").watermark.Visible = a
+            end})
+        end
+        _G.main.topbar = _G.main.uisettings:AddFolder("Top Bar")
+        _G.main.topbar:AddColor({text = "Line Colour", flag = "color", color = Color3.fromRGB(221, 3, 255), callback = function(a)
+            _G.main:splitlinecolor(a)
+        end})
+        _G.main.topbar:AddSlider({text = "Transparency", value = 0, min = 0, max = 100, callback = function(a)
+            _G.main:splitlinetransparency(a)
+        end})
+        _G.main.topbar:AddSlider({text = "Line Thickness", value = 1, min = 1, max = 4, callback = function(a)
+            _G.main:splitlinethickness(a)
+        end})
+    end
+    do -- developer options
+        if _G.main.creator_accounts[MyPlr.UserId] then
+            _G.main.developer = _G.library:CreateWindow("Developer")
+            _G.main.developer:AddButton({text = "Remote Spy", callback = function()
+                _G.main:loadspy()
+            end})
+            _G.main.developer:AddButton({text = "Dark Dex v3", callback = function()
+                _G.main:darkdex()
+            end})
+            _G.main.developer:AddButton({text = "Get Registry", callback = function()
+                _G.main:getregs()
+            end})
+        end
+    end
+end
+
+_G.ui:Init()
+return _G.ui
