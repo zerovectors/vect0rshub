@@ -1,5 +1,5 @@
 _G.library = { }
-script.Name = "Base_Script"
+script.Name = "uwuware"
 local ca = workspace.CurrentCamera
 local cg = game:GetService("CoreGui")
 
