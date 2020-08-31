@@ -207,7 +207,7 @@ do -- gui
             end)
             self:AddTextBox("Character Cheats", "WalkSpeed", "WalkSpeed", "WalkSpeed", function(a)
                 print(a)
-                _G.main:jumppower(tonumber(a))
+                _G.main:walkspeed(tonumber(a))
             end)
             self:AddTextBox("Character Cheats", "JumpPower", "JumpPower", "JumpPower", function(a)
                 print(a)
