@@ -5,7 +5,7 @@ local cg = game:GetService("CoreGui")
 
 do -- gui
 	_G.library = {
-		name = "Base",
+		name = "uwuware",
 		gui_objs = {
 			main = nil,
 			mainframes = { },
